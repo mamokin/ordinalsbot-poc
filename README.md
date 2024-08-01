@@ -2,7 +2,7 @@
 
 ## preamble
 
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app). All the default options were selected which result in following: App Router, Tailwind CSS, TypeScript
 
 ### Customizations
 
@@ -73,9 +73,26 @@ package additions:
 
 vscode workspace extension to add support for displaying commitlint messages within the vscode git commit window/input
 
-### create-next-app code change
+### `create-next-app` Code
 
 instances of `{' '}` have been replaced with `&nbsp;`
+
+### GitHub Repository
+
+"Always suggest updating pull request branches Loading" has been enabled.
+A "classic" GitHub "Branch protection rule" has been added to protect the "main" branch. The following protection rules exist for "main" after these modifications:
+
+- Require a pull request before merging
+  - Require approvals (1)
+- Dismiss stale pull request approvals when new commits are pushed
+- Require conversation resolution before merging
+- Require linear history
+
+### .env.local
+
+As this proof-of-concept (POC) repository is an API interaction one, a `.env.local.example` has been provided to serve as a template for provisioning sensitive information to the application at build time.
+
+Additionally, the "Dotenv Official +Vault" vscode extension has been added to the projects Workspace Recommendations.
 
 ## Getting Started
 
