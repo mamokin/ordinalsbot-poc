@@ -94,6 +94,36 @@ As this proof-of-concept (POC) repository is an API interaction one, a `.env.loc
 
 Additionally, the "Dotenv Official +Vault" vscode extension has been added to the projects Workspace Recommendations.
 
+### packages
+
+The following packages have been added to the project:
+
+- react-spinners: "A collection of react loading spinners"
+
+## Project Structure
+
+This project has been bootstrapped with `create-next-app` with the app router configuration so, much of the structure is preordained. On top of this default structure the following changes have been made.
+
+The addition of the following directories:
+
+- app/api/
+
+  In here are API routes or other API related files.
+
+- app/components/
+
+  The eternal resting place of all components. All components found here are designed to be later used as a design library and thus, are all loosely coupled, dumb components.
+
+- app/utils/
+
+  Globally required utility functions live in here.
+
+## Guidelines
+
+There are some design principles being followed throughout this projects code. A notable one that is difficult to enforce with utilities such as ESLint and Prettier is CSS naming semantics.
+
+This project adheres to [BEM](https://getbem.com/introduction/) naming conventions for element class names. While Tailwind CSS has been opted into as part of the bootstrap `creat-next-app` script, all new components are designed with new CSS to reduce any external factors breaking the component library appearances. While uncommon, large design libraries publish updates with breaking changes which can create large and mandatory development efforts to be performed to unblock work once started.
+
 ## Getting Started
 
 Install node packages and setup your IDE default formatter (vscode specific) to use "Prettier - Code formatter".
