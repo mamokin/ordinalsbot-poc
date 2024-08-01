@@ -1,7 +1,8 @@
 import { redirect } from 'next/navigation';
 import { Suspense } from 'react';
+import KeyValue from '../../components/key-value/KeyValue';
 import Loader from '../../components/loader/Loader';
-import { getTickerInfo } from '../../components/ticker-info/actions';
+import { getTickerInfo } from './actions';
 
 async function getData(ticker: string) {
   const response = await getTickerInfo(ticker);
@@ -23,15 +24,11 @@ export default async function Page({ params }: { params: { ticker: string } }) {
 
       <Suspense fallback={<Loader />}>
         {response?.error && (
-          <p className="ticker-info__error">something went wrong</p>
+          <p className="ticker-info__error">{response.error}</p>
         )}
-        {!response?.error &&
-          response?.result &&
-          Object.entries(response.result).map(([k, v]) => (
-            <p key={k} className="ticker-info__statistic">
-              {k}: {v}
-            </p>
-          ))}
+        {!response?.error && response?.result && (
+          <KeyValue object={response.result} />
+        )}
       </Suspense>
     </article>
   );

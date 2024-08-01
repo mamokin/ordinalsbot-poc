@@ -113,7 +113,11 @@ The addition of the following directories:
 
 - app/ticker-info/[ticker]/TRIO
 
-  A dynamic route that takes a ticker as a param to load ticker information for the provided ticker all behind a suspense wrapper.
+  A dynamic route that takes a ticker as a param to load ticker information all behind a suspense wrapper.
+
+- app/order-status/[id]/some-order-id
+
+  A dynamic route that takes an order ID as a param to load order information all behind a suspense wrapper.
 
 - app/components/
 

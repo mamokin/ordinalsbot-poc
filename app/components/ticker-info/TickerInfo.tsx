@@ -1,6 +1,7 @@
 'use client';
 import { useRef } from 'react';
 import { useFormState } from 'react-dom';
+import KeyValue from '../key-value/KeyValue';
 import { SubmitButton } from '../submit-button/SubmitButton';
 import { getTickerInfoWithFormDataAction } from './actions';
 import { TickerInfo as TTickerInfo } from './schema';
@@ -69,13 +70,7 @@ export default function TickerInfo() {
         {state.error && (
           <p className="ticker-info__error">something went wrong</p>
         )}
-        {!state.error &&
-          state.data &&
-          Object.entries(state.data).map(([k, v]) => (
-            <p key={k} className="ticker-info__statistic">
-              {k}: {v}
-            </p>
-          ))}
+        {!state.error && state.data && <KeyValue object={state.data} />}
       </section>
     </article>
   );

@@ -1,6 +1,7 @@
 'use client';
 import { useRef } from 'react';
 import { useFormState } from 'react-dom';
+import KeyValue from '../key-value/KeyValue';
 import { SubmitButton } from '../submit-button/SubmitButton';
 import { getWalletBalanceWithFormDataAction } from './actions';
 import { WalletBalance as TWalletBalance } from './schema';
@@ -94,13 +95,7 @@ export default function WalletBalance() {
         {!state.error &&
           state.data &&
           state.data.map((wallet) => {
-            return Object.entries(wallet).map(([k, v]) => (
-              <>
-                <p className="wallet-balance__data-point">
-                  {k}: {v}
-                </p>
-              </>
-            ));
+            return <KeyValue key={wallet.available_balance} object={wallet} />;
           })}
       </section>
     </article>
