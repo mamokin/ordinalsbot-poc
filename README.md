@@ -111,6 +111,10 @@ The addition of the following directories:
 
   In here are API routes or other API related files.
 
+- app/ticker-info/[ticker]/TRIO
+
+  A dynamic route that takes a ticker as a param to load ticker information for the provided ticker all behind a suspense wrapper.
+
 - app/components/
 
   The eternal resting place of all components. All components found here are designed to be later used as a design library and thus, are all loosely coupled, dumb components.
