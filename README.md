@@ -99,6 +99,7 @@ Additionally, the "Dotenv Official +Vault" vscode extension has been added to th
 The following packages have been added to the project:
 
 - react-spinners: "A collection of react loading spinners"
+- ordinalsbot: "Node.js library for OrdinalsBot API"
 
 ## Project Structure
 
