@@ -20,7 +20,7 @@ export const walletBalanceSchema = z.object({
 export type WalletBalance = z.infer<typeof walletBalanceSchema>;
 
 export const getWalletBalanceFormData = z.object({
-  ticker: z.string().min(3),
+  ticker: z.string().optional(),
   address: z.string().min(3)
 });
 

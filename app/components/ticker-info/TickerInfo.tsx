@@ -50,7 +50,7 @@ export default function TickerInfo() {
           <label htmlFor="ticker">
             <input
               type="text"
-              id="ticker"
+              id="ticker-info__ticker"
               name="ticker"
               className="ticker-info__form-input"
               placeholder="Ticker i.e. TRIO"
