@@ -1,0 +1,22 @@
+.connect-wallet__stats-container {
+  position: relative;
+}
+
+.connect-wallet__stats {
+  position: absolute;
+  bottom: -1rem;
+  right: 0;
+  text-align: end;
+}
+
+.connect-wallet__stats p {
+  font-size: 1rem;
+}
+
+.connect-wallet__stats-address {
+  width: max-content;
+}
+
+.connect-wallet__button {
+  width: auto;
+}
