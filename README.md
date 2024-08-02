@@ -1,4 +1,4 @@
-# ordinal poc
+# ordinals poc
 
 ## Table of contents
 
