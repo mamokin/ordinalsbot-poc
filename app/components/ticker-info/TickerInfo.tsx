@@ -5,6 +5,7 @@ import KeyValue from '../key-value/KeyValue';
 import { SubmitButton } from '../submit-button/SubmitButton';
 import { getTickerInfoWithFormDataAction } from './actions';
 import { TickerInfo as TTickerInfo } from './schema';
+import './TickerInfo.css';
 
 export type TickerInfoFormState = Partial<{
   message: string;
@@ -13,8 +14,8 @@ export type TickerInfoFormState = Partial<{
 }>;
 
 const initialState = {
-  error: '',
   message: '',
+  error: '',
   data: null
 };
 
@@ -29,12 +30,10 @@ export default function TickerInfo() {
   );
 
   const handleFormSubmitAction = async (formData: FormData) => {
-    if (!state.error) {
-      await formAction(formData);
+    await formAction(formData);
 
-      // // reset the form
-      // ref.current?.reset();
-    }
+    // reset the form
+    ref.current?.reset();
   };
 
   return (
@@ -57,19 +56,20 @@ export default function TickerInfo() {
               required
             />
 
-            <p aria-live="polite" className="column" role="status">
+            <p
+              aria-live="polite"
+              className="ticker-info__error error"
+              role="status"
+            >
               {state?.error}
             </p>
           </label>
 
-          <SubmitButton />
+          <SubmitButton key="ticker-info-submit" />
         </form>
       </section>
 
       <section>
-        {state.error && (
-          <p className="ticker-info__error">something went wrong</p>
-        )}
         {!state.error && state.data && <KeyValue object={state.data} />}
       </section>
     </article>

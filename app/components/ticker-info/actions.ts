@@ -1,4 +1,5 @@
 'use server';
+import { parseZodErrors } from '../../lib/utils/parse-zod-errors';
 import { parseGetTickerInfoForm, TickerInfo, tickerInfoSchema } from './schema';
 import { TickerInfoFormState } from './TickerInfo';
 
@@ -39,19 +40,31 @@ export async function getTickerInfoWithFormDataAction(
     ticker: formData.get('ticker') as string
   });
 
+  if (!success) {
+    return { message: '', error: parseZodErrors(error), data: null };
+  }
+
   try {
     const response = await getTickerInfo(data?.ticker || '');
 
     if (response) {
       return {
         message: 'fetched data success',
-        data: response.result as TickerInfo['result'],
-        error: response.error || ''
+        error: response.error || '',
+        data: response.result as TickerInfo['result']
       };
     }
 
-    return { message: `fake success message` };
+    return {
+      message: '',
+      error: 'Failed to fetch ticker info.',
+      data: null
+    };
   } catch (e) {
-    return { error: `fake failure message` };
+    return {
+      message: '',
+      error: 'Failed to fetch ticker info.',
+      data: null
+    };
   }
 }

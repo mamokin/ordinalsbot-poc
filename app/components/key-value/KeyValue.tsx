@@ -12,7 +12,11 @@ export default function KeyValue({
     <>
       {Object.entries(object).map(([k, v]) => (
         <p key={k} className="key-value__statistic">
-          <span style={{ fontWeight: 700 }}>{k}</span>: {v}
+          <span style={{ fontWeight: 700, textTransform: 'capitalize' }}>
+            {k.replace(/_/g, ' ')}
+          </span>
+          :&nbsp;
+          {v}
         </p>
       ))}
     </>

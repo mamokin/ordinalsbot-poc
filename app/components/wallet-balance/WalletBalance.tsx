@@ -6,6 +6,7 @@ import Loader from '../loader/Loader';
 import { SubmitButton } from '../submit-button/SubmitButton';
 import { getWalletBalanceWithFormDataAction } from './actions';
 import { WalletBalance as TWalletBalance } from './schema';
+import './WalletBalance.css';
 
 export type WalletBalanceFormState = Partial<{
   message: string;
@@ -40,9 +41,7 @@ export default function WalletBalance() {
   );
 
   const handleFormSubmitAction = (formData: FormData) => {
-    if (!state.error) {
-      formAction(formData);
-    }
+    formAction(formData);
 
     // reset the form
     // ref.current?.reset();
@@ -78,15 +77,23 @@ export default function WalletBalance() {
               required
             />
           </label>
+
+          {state.error && (
+            <p
+              aria-live="polite"
+              className="wallet-balance__error error"
+              role="status"
+            >
+              Error: {state.error}
+            </p>
+          )}
+
           <br />
 
-          <SubmitButton />
+          <SubmitButton key="wallet-balance-submit" />
         </form>
 
         <Suspense fallback={<Loader />}>
-          {state.error && (
-            <p className="wallet-balance__error">Error: {state.error}</p>
-          )}
           {!state.error &&
             state.data &&
             state.data.map((wallet) => {

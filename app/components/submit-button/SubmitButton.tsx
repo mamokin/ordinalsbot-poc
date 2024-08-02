@@ -2,7 +2,7 @@
 import { useFormStatus } from 'react-dom';
 
 export function SubmitButton() {
-  const { pending, method } = useFormStatus();
+  const { pending } = useFormStatus();
 
   return (
     <button
