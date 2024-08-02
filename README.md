@@ -1,8 +1,33 @@
 # ordinal poc
 
-## preamble
+## Table of contents
 
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app). All the default options were selected which result in following: App Router, Tailwind CSS, TypeScript
+- [Overview](#overview)
+  - [Customizations](#customizations)
+    - [tsconfig](#tsconfig)
+    - [Prettier](#prettier)
+    - [Husky](#husky)
+    - [Commitlint](#commitlint)
+    - [GitHub Repository](#github-repository)
+    - [Environment Variables](#environment-variables)
+    - [Dependencies](#dependencies)
+    - [Project Structure](#project-structure)
+  - [Utilities](#utilities)
+  - [Guidelines](#guidelines)
+    - [Styling](#styling)
+    - [HTML Character Entities](#html-character-entities)
+    - [NextJS Metadata](#nextjs-metadata)
+  - [Getting Started](#getting-started)
+    - [Dependency Installation](#dependency-installation)
+    - [Environment Variables](#environment-variables-1)
+    - [Start the Development Server](#start-the-development-server)
+  - [Contributing](#contributing)
+  - [Learn More](#learn-more)
+  - [Deploy on Vercel](#deploy-on-vercel)
+
+## Overview
+
+This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app). All the default options were selected which result in following: App Router, Tailwind CSS, & TypeScript.
 
 ### Customizations
 
@@ -21,7 +46,7 @@ Additions:
 - pretty: true
 - sourceMap: true
 
-### Prettier
+#### Prettier
 
 Prettier has been added to the project along with:
 
@@ -29,14 +54,7 @@ Prettier has been added to the project along with:
 - .prettierrc config file in root directory
 - .prettierignore config file in root directory
 
-### .gitignore
-
-Additions:
-
-- yarn.lock
-- package-lock.json
-
-### Husky
+#### Husky
 
 Husky has been added to perform some checks on code:
 
@@ -62,7 +80,7 @@ Husky has some required modification to scripts within package.json:
 
 Additionally, the default Husky pre-commit script has been altered. A preset from an [online guide](https://blog.jarrodwatts.com/nextjs-eslint-prettier-husky) was used with some slight tweaks. The pre-commit hook will run the equivalent of the validate-and-build script with some helpful messaging added.
 
-### Commitlint
+#### Commitlint
 
 Commitlint was added during the `npx -husky-init` script that starts the Husky setup process (see last section).
 
@@ -73,11 +91,7 @@ package additions:
 
 vscode workspace extension to add support for displaying commitlint messages within the vscode git commit window/input
 
-### `create-next-app` Code
-
-instances of `{' '}` have been replaced with `&nbsp;`
-
-### GitHub Repository
+#### GitHub Repository
 
 "Always suggest updating pull request branches Loading" has been enabled.
 A "classic" GitHub "Branch protection rule" has been added to protect the "main" branch. The following protection rules exist for "main" after these modifications:
@@ -88,28 +102,26 @@ A "classic" GitHub "Branch protection rule" has been added to protect the "main"
 - Require conversation resolution before merging
 - Require linear history
 
-### .env.local
+#### Environment Variables
+
+##### .env.local
 
 As this proof-of-concept (POC) repository is an API interaction one, a `.env.local.example` has been provided to serve as a template for provisioning sensitive information to the application at build time.
 
 Additionally, the "Dotenv Official +Vault" vscode extension has been added to the projects Workspace Recommendations.
 
-### packages
+#### Dependencies
 
 The following packages have been added to the project:
 
 - react-spinners: "A collection of react loading spinners"
 - ordinalsbot: "Node.js library for OrdinalsBot API"
 
-## Project Structure
+#### Project Structure
 
 This project has been bootstrapped with `create-next-app` with the app router configuration so, much of the structure is preordained. On top of this default structure the following changes have been made.
 
 The addition of the following directories:
-
-- app/api/
-
-  In here are API routes or other API related files.
 
 - app/ticker-info/[ticker]/TRIO
 
@@ -123,21 +135,69 @@ The addition of the following directories:
 
   The eternal resting place of all components. All components found here are designed to be later used as a design library and thus, are all loosely coupled, dumb components.
 
-- app/utils/
+  Treat this is an internal design library. This means that you should never include dependencies, other than installed node packages, within any import or export statements.
+
+- app/lib/constants/
+
+  Globally required constants live in here.
+
+- app/lib/utils/
 
   Globally required utility functions live in here.
 
+### Utilities
+
+#### Inherited NextJS Functionality
+
+NextJS 14 ships with a variety of useful tools and functionality that pair nicely with the app router configuration in use by this project.
+
+##### Error Pages
+
+`error.tsx` files can be created within any page route directory and will be used in the event of an application error. This allows for graceful error handling as opposed to the application locking up or revealing sensitive information.
+
+`not-found.tsx` files function similarly to `error.tsx` files in that they can be created within any page route directory. However, they differ in that a `not-found.tsx` file will be rendered if the requested URL/route does not exist.
+
 ## Guidelines
+
+### Styling
 
 There are some design principles being followed throughout this projects code. A notable one that is difficult to enforce with utilities such as ESLint and Prettier is CSS naming semantics.
 
 This project adheres to [BEM](https://getbem.com/introduction/) naming conventions for element class names. While Tailwind CSS has been opted into as part of the bootstrap `creat-next-app` script, all new components are designed with new CSS to reduce any external factors breaking the component library appearances. While uncommon, large design libraries publish updates with breaking changes which can create large and mandatory development efforts to be performed to unblock work once started.
 
+> NOTE: use custom classes cautiously when mixing with tailwind
+>
+> - as a general rule, your components should either rely entirely on Tailwind classes or custom classes.
+
+### HTML Character Entities
+
+On occasian, characters like `{' '}` or apostraphes and quotation marks will be required. One should strive to use HTML Character Entities instead of the more familiar punctuation. There are numerous resources available to cross-reference the codes you will need such as this one from [freeformatter.com/html-entities.html](https://www.freeformatter.com/html-entities.html).
+
+### NextJS Metadata
+
+There exists a default project metadata object that should be extended whenever defining metadata is required. Refer to the [NextJS Metadata documentation](https://nextjs.org/docs/app/building-your-application/optimizing/metadata).
+
 ## Getting Started
+
+### Dependency Installation
 
 Install node packages and setup your IDE default formatter (vscode specific) to use "Prettier - Code formatter".
 
-First, run the development server:
+```bash
+npm i
+# or
+yarn i
+# or
+pnpm i
+```
+
+### Environment Variables
+
+Ensure your `.env.local` is configured accordingly. Refer to `.env.local.example`.
+
+### Start the Development Server
+
+If everything is configured correctly, you can now start the development server.
 
 ```bash
 npm run dev
@@ -145,8 +205,6 @@ npm run dev
 yarn dev
 # or
 pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
@@ -154,6 +212,32 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
 This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+
+## Contributing
+
+To make contributions to the project:
+
+1. checkout the `main` branch
+2. sync your local branch with the origin (`git fetch && git pull`)
+3. checkout a new branch. use prefixes to denote the purpose of the branch like so:
+
+   - `git checkout -b feat/some-feature`
+   - `git checkout -b bugfix/fixed-the-thing`
+   - `git checkout -b task/trivial-work`
+   - `git checkout -b release/v0.0.1`
+   - `git checkout -b release/v0.0.2-beta.0`
+
+4. make your code changes, and commit your changes
+
+   This project uses [Husky](https://github.com/typicode/husky#readme) and [Commitlint](https://commitlint.js.org/) to ensure your commits are uniform to ensure swift changelog/release-note creation is possible. Read more about these tools in the [Customizations - Husky](#husky) and [Customizations - Commitlint](#commitlint) sections.
+
+   You can manually run the various checks via the added npm scripts:
+
+   - `check-types`, `check-format`, `format`, `validate`, `valdiate-and-build` or `vab`
+
+5. push your branch to origin, open a PR, and request a peer review of your proposed changes
+
+6. once your PR has been approved, merge your branch into the designated branch using the squash method. This provides an opportunity to review your commits and ensure nothing is amiss before merging changes.
 
 ## Learn More
 
