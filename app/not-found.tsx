@@ -29,6 +29,7 @@ export default function NotFound() {
           </li>
         </ol>
         <br />
+
         <Link className="hover:text-sky-500" href="/">
           Return Home
         </Link>
