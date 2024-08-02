@@ -29,6 +29,16 @@
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app). All the default options were selected which result in following: App Router, Tailwind CSS, & TypeScript.
 
+When navigating to the `/order-status` and `ticker-info` dynamic routes, ensure you provide a query parameter in the URL. The error page will remind you of such if you end up seeing it.
+
+This application has a "connect wallet" function that has been built with MetaMask in mind due to its prevelance. Under the hood, this is powered via [WalletConnect](https://walletconnect.com/). The configuration of WalletConnect leverages QR codes for connecting wallets and instantiates a web socket connection to handle various events. At present, you can connect a wallet, restore a prior session, and disconnect a wallet. The following details the process of disconnecting a MetaMask wallet from the mobile Android application:
+
+1.  Navigate to settings via the cogwheel at the bottom right of the screen
+2.  Scroll down and open the "Experimental" rule set
+3.  Press the blue "View sessions" button
+4.  Press and hold on the "ordinals-poc" session entry
+5.  Press delete
+
 ### Customizations
 
 While this project has been boostrapped with nextjs create-next-app, there have been some alterations made.
@@ -108,14 +118,21 @@ A "classic" GitHub "Branch protection rule" has been added to protect the "main"
 
 As this proof-of-concept (POC) repository is an API interaction one, a `.env.local.example` has been provided to serve as a template for provisioning sensitive information to the application at build time.
 
+```bash
+# the API key for ordinalsbot
+API_KEY= api_key
+# go to https://cloud.walletconnect.com to get a new project
+NEXT_PUBLIC_PROJECT_ID= cloud.walletconnect.com
+```
+
 Additionally, the "Dotenv Official +Vault" vscode extension has been added to the projects Workspace Recommendations.
 
 #### Dependencies
 
-The following packages have been added to the project:
+The following non-exhaustive list of packages are in use for this project:
 
 - react-spinners: "A collection of react loading spinners"
-- ordinalsbot: "Node.js library for OrdinalsBot API"
+- walletconnect/\*: A handful of packages from the walletconnect series.
 
 #### Project Structure
 
