@@ -10,8 +10,7 @@ import { DEFAULT_METADATA } from './lib/constants/metadata';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  ...DEFAULT_METADATA,
-  description: 'A simple application to interface with the Ordinals API'
+  ...DEFAULT_METADATA
 };
 
 export default function RootLayout({
