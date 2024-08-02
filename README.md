@@ -118,6 +118,13 @@ A "classic" GitHub "Branch protection rule" has been added to protect the "main"
 
 As this proof-of-concept (POC) repository is an API interaction one, a `.env.local.example` has been provided to serve as a template for provisioning sensitive information to the application at build time.
 
+```bash
+# the API key for ordinalsbot
+API_KEY= api_key
+# go to https://cloud.walletconnect.com to get a new project
+NEXT_PUBLIC_PROJECT_ID= cloud.walletconnect.com
+```
+
 Additionally, the "Dotenv Official +Vault" vscode extension has been added to the projects Workspace Recommendations.
 
 #### Dependencies

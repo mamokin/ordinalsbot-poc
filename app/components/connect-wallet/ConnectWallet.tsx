@@ -6,9 +6,6 @@ import { Suspense, useEffect, useState } from 'react';
 import Loader from '../loader/Loader';
 import './ConnectWallet.css';
 
-// TODO: move to env
-export const WALLET_CONNECT_PROJECT_ID = '23d69ad7958baecf1c4ee1911d9f34c9';
-
 export function ConnectWallet() {
   const [client, setClient] = useState<Client | undefined>(undefined);
   const [chain, setChain] = useState<string | undefined>(undefined);
@@ -99,8 +96,8 @@ export function ConnectWallet() {
     }
 
     setSession(undefined);
-
-    console.log('SESSION DELETED');
+    localStorage.removeItem('chain');
+    sessionStorage.removeItem('session');
   });
 
   useEffect(() => {
@@ -108,7 +105,6 @@ export function ConnectWallet() {
       const lastKeyIndex = client.session.getAll().length - 1;
       const lastSession = client.session.getAll()[lastKeyIndex];
 
-      console.log('lastSession', lastSession);
       setSession(lastSession);
     }
   }, [client]);
@@ -139,7 +135,7 @@ export function ConnectWallet() {
 
       if (uri) {
         QRCodeModal.open(uri, () => {
-          console.log('QR Code Modal closed');
+          console.info('QR Code Modal closed');
         });
       }
 
@@ -148,7 +144,6 @@ export function ConnectWallet() {
       setChain(_chain);
       sessionStorage.setItem('session', JSON.stringify(sessn));
       localStorage.setItem('chain', _chain);
-      console.log('chain', chain);
 
       QRCodeModal.close();
     } else {
@@ -195,11 +190,10 @@ export function ConnectWallet() {
 
   useEffect(() => {
     const initClient = async () => {
-      // const c = await Client.init({
       const c = await Client.init({
-        logger: 'debug',
+        // logger: 'debug',
         relayUrl: 'wss://relay.walletconnect.com',
-        projectId: WALLET_CONNECT_PROJECT_ID, // Register at WalletConnect to get a project ID
+        projectId: process.env.NEXT_PUBLIC_PROJECT_ID, // Register at WalletConnect to get a project ID
         metadata: {
           name: 'ordinals-poc',
           description: 'AppKit Example',
