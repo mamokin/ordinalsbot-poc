@@ -1,0 +1,18 @@
+.nav__content {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  margin: 1rem;
+}
+
+.nav__links,
+.nav__auth {
+  display: flex;
+  align-items: center;
+}
+
+.active {
+  color: var(--brand-primary--dark);
+  text-decoration: underline;
+}

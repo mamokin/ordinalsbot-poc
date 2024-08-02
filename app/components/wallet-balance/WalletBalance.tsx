@@ -1,7 +1,8 @@
 'use client';
-import { useRef } from 'react';
+import { Suspense, useRef } from 'react';
 import { useFormState } from 'react-dom';
 import KeyValue from '../key-value/KeyValue';
+import Loader from '../loader/Loader';
 import { SubmitButton } from '../submit-button/SubmitButton';
 import { getWalletBalanceWithFormDataAction } from './actions';
 import { WalletBalance as TWalletBalance } from './schema';
@@ -38,13 +39,13 @@ export default function WalletBalance() {
     initialState
   );
 
-  const handleFormSubmitAction = async (formData: FormData) => {
+  const handleFormSubmitAction = (formData: FormData) => {
     if (!state.error) {
-      await formAction(formData);
-
-      // // reset the form
-      // ref.current?.reset();
+      formAction(formData);
     }
+
+    // reset the form
+    // ref.current?.reset();
   };
 
   return (
@@ -60,43 +61,40 @@ export default function WalletBalance() {
           <label htmlFor="ticker">
             <input
               type="text"
-              id="ticker"
+              id="wallet-balance__ticker"
               name="ticker"
               className="ticker-info__form-input"
               placeholder="Ticker i.e. TRIO"
-              required
             />
-
-            <p aria-live="polite" className="column" role="status">
-              {state?.error}
-            </p>
           </label>
+          <br />
           <label htmlFor="address">
             <input
               type="text"
-              id="address"
+              id="wallet-balance__address"
               name="address"
               className="ticker-info__form-input"
               placeholder="Wallet Address"
               required
             />
-
-            <p aria-live="polite" className="column" role="status">
-              {state?.error}
-            </p>
           </label>
+          <br />
 
           <SubmitButton />
         </form>
 
-        {state.error && (
-          <p className="wallet-balance__error">Error: {state.error}</p>
-        )}
-        {!state.error &&
-          state.data &&
-          state.data.map((wallet) => {
-            return <KeyValue key={wallet.available_balance} object={wallet} />;
-          })}
+        <Suspense fallback={<Loader />}>
+          {state.error && (
+            <p className="wallet-balance__error">Error: {state.error}</p>
+          )}
+          {!state.error &&
+            state.data &&
+            state.data.map((wallet) => {
+              return (
+                <KeyValue key={wallet.available_balance} object={wallet} />
+              );
+            })}
+        </Suspense>
       </section>
     </article>
   );

@@ -1,0 +1,10 @@
+.footer-nav__list {
+  list-style: none;
+}
+
+.footer-nav__container {
+  display: flex;
+  justify-content: center;
+  padding: 1rem;
+  display: flex;
+}

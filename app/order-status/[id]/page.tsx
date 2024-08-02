@@ -1,5 +1,6 @@
 import { redirect } from 'next/navigation';
 import { Suspense } from 'react';
+import { Card } from '../../components/card/Card';
 import KeyValue from '../../components/key-value/KeyValue';
 import Loader from '../../components/loader/Loader';
 import { getOrderStatus } from './actions';
@@ -30,14 +31,16 @@ export default async function OrderStatus({
 
   return (
     <article className="order-status__container">
-      <h3>Order ID: {params.id}</h3>
+      <Card>
+        <h3>Order ID: {params.id}</h3>
 
-      <Suspense fallback={<Loader />}>
-        {properties && (
-          <KeyValue object={properties as Omit<TOrderStatus, 'tx'>} />
-        )}
-        {tx && <KeyValue object={tx} />}
-      </Suspense>
+        <Suspense fallback={<Loader />}>
+          {properties && (
+            <KeyValue object={properties as Omit<TOrderStatus, 'tx'>} />
+          )}
+          {tx && <KeyValue object={tx} />}
+        </Suspense>
+      </Card>
     </article>
   );
 }

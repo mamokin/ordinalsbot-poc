@@ -1,4 +1,9 @@
-export default async function KeyValue({
+'use client';
+
+/**
+ * Utility component to render all keys and their respective values of a provided object.
+ */
+export default function KeyValue({
   object
 }: {
   object: Record<string, string | boolean | number | null>;
@@ -7,7 +12,7 @@ export default async function KeyValue({
     <>
       {Object.entries(object).map(([k, v]) => (
         <p key={k} className="key-value__statistic">
-          {k}: {v}
+          <span style={{ fontWeight: 700 }}>{k}</span>: {v}
         </p>
       ))}
     </>
