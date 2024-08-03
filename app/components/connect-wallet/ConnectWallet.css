@@ -2,10 +2,13 @@
   position: relative;
 }
 
-.connect-wallet__stats {
+.connect-wallet__container {
   position: absolute;
-  bottom: -1rem;
+  bottom: 0;
   right: 0;
+}
+
+.connect-wallet__stats {
   text-align: end;
 }
 
@@ -17,6 +20,8 @@
   width: max-content;
 }
 
-.connect-wallet__button {
+.connect-wallet__button:not(:last-child) {
   width: auto;
+  align-self: end;
+  margin-bottom: 1rem;
 }

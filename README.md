@@ -39,6 +39,8 @@ This application has a "connect wallet" function that has been built with MetaMa
 4.  Press and hold on the "ordinals-poc" session entry
 5.  Press delete
 
+At this time, xverse does not support in-app disconnection functionality like described above for MetaMask however, you can click the "Clear Session" button to disconnect from this application.
+
 ### Customizations
 
 While this project has been boostrapped with nextjs create-next-app, there have been some alterations made.

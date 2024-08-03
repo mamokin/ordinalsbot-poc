@@ -1,17 +1,20 @@
 'use client';
 import QRCodeModal from '@walletconnect/qrcode-modal';
 import Client from '@walletconnect/sign-client';
-import { SessionTypes } from '@walletconnect/types';
+import { ProposalTypes, SessionTypes } from '@walletconnect/types';
 import { Suspense, useEffect, useState } from 'react';
+import { META_MASK_ETH_CHAIN_ID } from '../../lib/constants/chain-ids';
+import { getSessionMetrics } from '../../lib/utils/wallet-connect';
+import ChainsList from '../chains-list/ChainsList';
 import Loader from '../loader/Loader';
 import './ConnectWallet.css';
 
 export function ConnectWallet() {
   const [client, setClient] = useState<Client | undefined>(undefined);
-  const [chain, setChain] = useState<string | undefined>(undefined);
   const [session, setSession] = useState<SessionTypes.Struct | undefined>(
     undefined
   );
+  const [showChains, setShowChains] = useState<boolean>(false);
 
   client?.on('session_proposal', (event) => {
     // Show session proposal data to the user i.e. in a modal with options to approve / reject it
@@ -101,101 +104,13 @@ export function ConnectWallet() {
   });
 
   useEffect(() => {
-    if (client) {
-      const lastKeyIndex = client.session.getAll().length - 1;
-      const lastSession = client.session.getAll()[lastKeyIndex];
-
-      setSession(lastSession);
-    }
-  }, [client]);
-
-  const handleConnect = async (_chain: string = 'eip155:1') => {
-    setChain(undefined);
-
-    if (_chain.includes('stacks')) {
-      if (!client) {
-        return;
-      }
-
-      const { uri, approval } = await client.connect({
-        pairingTopic: undefined,
-        requiredNamespaces: {
-          stacks: {
-            methods: [
-              'stacks_signMessage',
-              'stacks_stxTransfer',
-              'stacks_contractCall',
-              'stacks_contractDeploy'
-            ],
-            chains: [_chain],
-            events: []
-          }
-        }
-      });
-
-      if (uri) {
-        QRCodeModal.open(uri, () => {
-          console.info('QR Code Modal closed');
-        });
-      }
-
-      const sessn = await approval();
-      setSession(sessn);
-      setChain(_chain);
-      sessionStorage.setItem('session', JSON.stringify(sessn));
-      localStorage.setItem('chain', _chain);
-
-      QRCodeModal.close();
-    } else {
-      if (!client) {
-        return;
-      }
-
-      const { uri, approval } = await client.connect({
-        pairingTopic: undefined,
-        requiredNamespaces: {
-          // bip122: {
-          //   methods: ['bitcoin_btcTransfer'],
-          //   chains: [_chain],
-          //   events: []
-          // }
-          eip155: {
-            methods: [
-              'eth_sendTransaction',
-              'eth_signTransaction',
-              'eth_sign',
-              'personal_sign',
-              'eth_signTypedData'
-            ],
-            chains: [_chain],
-            events: ['chainChanged', 'accountsChanged']
-          }
-        }
-      });
-
-      if (uri) {
-        QRCodeModal.open(uri, () => {
-          console.info('QR Code Modal closed');
-        });
-      }
-
-      const sessn = await approval();
-
-      setSession(sessn);
-      sessionStorage.setItem('session', JSON.stringify(sessn));
-      localStorage.setItem('chain', _chain);
-      QRCodeModal.close();
-    }
-  };
-
-  useEffect(() => {
     const initClient = async () => {
       const c = await Client.init({
         // logger: 'debug',
         relayUrl: 'wss://relay.walletconnect.com',
         projectId: process.env.NEXT_PUBLIC_PROJECT_ID, // Register at WalletConnect to get a project ID
         metadata: {
-          name: 'ordinals-poc',
+          name: 'ordinalsbot-poc',
           description: 'AppKit Example',
           url: 'https://web3modal.com', // origin must match your domain & subdomain
           icons: ['https://avatars.githubusercontent.com/u/37784886']
@@ -206,28 +121,126 @@ export function ConnectWallet() {
 
     if (client === undefined) {
       initClient();
+    } else {
+      const lastKeyIndex = client.session.getAll().length - 1;
+      const lastSession = client.session.getAll()[lastKeyIndex];
+
+      setSession(lastSession);
     }
   }, [client]);
 
+  const handleConnect = async (_chain: string) => {
+    // ProposalTypes.RequiredNamespaces
+    let requiredNamespaces: ProposalTypes.RequiredNamespaces = {};
+
+    if (_chain.includes('stacks')) {
+      // set namespaces config for stacks
+      requiredNamespaces = {
+        stacks: {
+          methods: [
+            'stacks_signMessage',
+            'stacks_stxTransfer',
+            'stacks_contractCall',
+            'stacks_contractDeploy'
+          ],
+          chains: [_chain],
+          events: []
+        }
+      };
+    } else if (_chain === META_MASK_ETH_CHAIN_ID) {
+      // set namespaces config for ethereum
+      requiredNamespaces = {
+        eip155: {
+          methods: [
+            'eth_sendTransaction',
+            'eth_signTransaction',
+            'eth_sign',
+            'personal_sign',
+            'eth_signTypedData'
+          ],
+          chains: [_chain],
+          events: ['chainChanged', 'accountsChanged']
+        }
+      };
+    } else if (_chain.includes('BTC')) {
+      // set namespace config for bitcoin
+      requiredNamespaces = {
+        bip122: {
+          methods: ['bitcoin_btcTransfer'],
+          chains: [_chain],
+          events: []
+        }
+      };
+    } else {
+      alert('The wallet you tried to connect is not supported.');
+    }
+
+    if (!client) {
+      return;
+    }
+
+    // attempt a connection
+    const { uri, approval } = await client.connect({
+      pairingTopic: undefined,
+      requiredNamespaces
+    });
+
+    if (uri) {
+      QRCodeModal.open(uri, () => {
+        console.info('QR Code Modal closed');
+      });
+    }
+
+    const sessn = await approval();
+
+    // store the session
+    setSession(sessn);
+    sessionStorage.setItem('session', JSON.stringify(sessn));
+    localStorage.setItem('chain', _chain);
+
+    // cleanup
+    QRCodeModal.close();
+    setShowChains(false);
+  };
+
   if (session) {
-    const provider = session.peer.metadata.name;
-    const address = session.namespaces.eip155.accounts[0].slice(9);
-    const chain =
-      session.namespaces.eip155.chains && session.namespaces.eip155.chains[0];
+    const { accountAddress, chainId, provider } = getSessionMetrics(session);
+
+    const onResetSession = (event: React.MouseEvent<HTMLElement>) => {
+      event.preventDefault();
+      client?.disconnect({
+        topic: session.topic,
+        reason: { code: 6000, message: 'User disconnected' }
+      });
+
+      setSession(undefined);
+      setShowChains(false);
+    };
 
     return (
       <article className="connect-wallet__stats-container">
         <Suspense fallback={<Loader />}>
+          <button
+            type="button"
+            className="connect-wallet__button"
+            onClick={onResetSession}
+          >
+            Clear Session
+          </button>
           <div className="connect-wallet__stats">
             <p id="provider">Wallet provider: {provider}</p>
-            <p id="chain">Chain: {chain}</p>
+            <p id="chain">Chain: {chainId}</p>
             <p id="address" className="connect-wallet__stats-address">
-              Address: {address}
+              Address: {accountAddress}
             </p>
           </div>
         </Suspense>
       </article>
     );
+  }
+
+  if (showChains) {
+    return <ChainsList callback={handleConnect} />;
   }
 
   return (
@@ -236,7 +249,7 @@ export function ConnectWallet() {
       className="connect-wallet__button"
       onClick={(e) => {
         e.preventDefault();
-        handleConnect();
+        setShowChains(true);
       }}
     >
       Connect Wallet

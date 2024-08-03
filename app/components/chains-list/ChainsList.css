@@ -1,0 +1,8 @@
+.chains-list__item {
+  list-style-type: none;
+  cursor: pointer;
+  font-size: 1.2rem;
+}
+.chains-list__item:hover {
+  color: var(--brand-primary--dark);
+}
