@@ -40,6 +40,7 @@
   --info: var(--cornflower-blue);
   --warning: var(--jonquil);
   --error: var(--chili-red);
+  --success: var(--fern-green);
 
   --brand-primary: var(--hunyadi-yellow);
   --brand-primary--dark: var(--dark-goldenrod);
@@ -132,13 +133,23 @@
 }
 
 /* START TEXT MODIFIERS */
+.bold {
+  font-weight: 700;
+}
 .capitalize {
   text-transform: capitalize;
+}
+.uppercase {
+  text-transform: uppercase;
+}
+.underline {
+  text-decoration: underline;
 }
 /* END TEXT MODIFIERS */
 
 /* START STATUS COLORS */
-.info {
+.info,
+.number {
   color: var(--info) !important;
 }
 .warning {
@@ -146,6 +157,9 @@
 }
 .error {
   color: var(--error) !important;
+}
+.success {
+  color: var(--success) !important;
 }
 /* END STATUS COLORS */
 
