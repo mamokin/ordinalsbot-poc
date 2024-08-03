@@ -1,4 +1,5 @@
 'use server';
+import { DEFAULT_HEADERS } from '../../lib/constants/fetch';
 import { parseZodErrors } from '../../lib/utils/parse-zod-errors';
 import { OrderStatus, orderStatusSchema } from './schema';
 
@@ -7,12 +8,8 @@ import { OrderStatus, orderStatusSchema } from './schema';
  */
 export async function getOrderStatus(id: string) {
   return fetch(`https://api.ordinalsbot.com/order?id=${id}`, {
-    method: 'GET',
-    // @ts-expect-error - 'x-api-key' custom header in use
-    headers: {
-      'Content-Type': 'application/json',
-      'x-api-key': process.env.API_KEY // TODO: not needed according to docs, confirm
-    }
+    ...DEFAULT_HEADERS,
+    method: 'GET'
   })
     .then((res) => res.json())
     .then(async (orderStatus: OrderStatus) => {
