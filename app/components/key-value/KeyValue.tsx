@@ -8,9 +8,11 @@ import './KeyValue.css';
  * Note: nested objects are ignored
  */
 export default function KeyValue({
-  object
+  object,
+  excludeKeys = []
 }: {
   object: Record<string, object | string | boolean | number | null>;
+  excludeKeys?: string[];
 }) {
   const idRegex = /\bid\b/gi; // match words case insensitive 'id'
 
@@ -46,20 +48,25 @@ export default function KeyValue({
   const renderKV = (k: string, v: string | boolean | number | null) => {
     const prettyKey = snakeCaseToSentence(k);
 
-    return (
-      <p key={k} className="key-value__statistic">
-        <span className="key-value__statistic-key bold capitalize">
-          {camelCaseToSentence(prettyKey).replace(idRegex, 'ID')}
-        </span>
-        &nbsp;
-        {renderValueByTypeOrKey(k, v)}
-      </p>
-    );
+    if (!excludeKeys.includes(k)) {
+      return (
+        <p key={k} className="key-value__statistic">
+          <span className="key-value__statistic-key bold capitalize">
+            {camelCaseToSentence(prettyKey).replace(idRegex, 'ID')}
+          </span>
+          &nbsp;
+          {renderValueByTypeOrKey(k, v)}
+        </p>
+      );
+    }
+
+    return null;
   };
 
   return (
     <>
       {Object.entries(object).map(([k, v]) => {
+        console.log('k', k);
         if (v && typeof v !== 'object') {
           return renderKV(k, v);
         }

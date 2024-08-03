@@ -65,7 +65,9 @@ export default function TickerInfo() {
       </section>
 
       <section>
-        {!state.error && state.data && <KeyValue object={state.data} />}
+        {!state.error && state.data && (
+          <KeyValue object={state.data} excludeKeys={['tick']} />
+        )}
       </section>
     </article>
   );
