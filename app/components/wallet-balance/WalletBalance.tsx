@@ -14,7 +14,7 @@ export type WalletBalanceFormState = Partial<{
   data: TWalletBalance['result'] | null;
 }>;
 
-const initialState = {
+const initialState: WalletBalanceFormState = {
   error: '',
   message: '',
   data: null
