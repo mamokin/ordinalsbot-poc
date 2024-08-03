@@ -50,6 +50,11 @@
   position: relative;
 }
 
+.home__container {
+  display: flex;
+  flex-direction: column;
+}
+
 .card {
   margin-bottom: 2rem;
 }
@@ -87,5 +92,20 @@
 @media (prefers-color-scheme: dark) {
   .logo {
     filter: invert(1) drop-shadow(0 0 0.3rem #ffffff70);
+  }
+}
+
+/* 4k Displays */
+@media (min-width: 2160px) {
+  .card {
+    margin-bottom: 0;
+  }
+  .card:not(:last-of-type) {
+    margin-right: 1rem;
+  }
+  .home__container {
+    flex-direction: row;
+    align-items: flex-start;
+    max-width: 1600px;
   }
 }

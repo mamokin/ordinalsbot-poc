@@ -1,4 +1,5 @@
 'use server';
+import { DEFAULT_HEADERS } from '../../lib/constants/fetch';
 import { parseZodErrors } from '../../lib/utils/parse-zod-errors';
 import { parseGetTickerInfoForm, TickerInfo, tickerInfoSchema } from './schema';
 import { TickerInfoFormState } from './TickerInfo';
@@ -10,21 +11,18 @@ export async function getTickerInfo(ticker: string) {
   return fetch(
     `https://api.ordinalsbot.com/opi/v1/brc20/ticker_info?ticker=${ticker}`,
     {
-      method: 'GET',
-      // @ts-expect-error - 'x-api-key' custom header in use
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': process.env.API_KEY
-      }
+      ...DEFAULT_HEADERS,
+      method: 'GET'
     }
   )
     .then((res) => res.json())
     .then(async (tickerInfo: TickerInfo) => {
+      console.log('tickerInfo', tickerInfo);
       const { success, data, error } =
         await tickerInfoSchema.safeParseAsync(tickerInfo);
 
       if (!success) {
-        console.error('FAILED to GET TICKER INFO: ', error);
+        console.error('FAILED to parse TICKER INFO: ', parseZodErrors(error));
         return null;
       }
 

@@ -1,6 +1,7 @@
 'use client';
 import { Suspense, useRef } from 'react';
 import { useFormState } from 'react-dom';
+import ErrorMesage from '../error-message/ErrorMessage';
 import KeyValue from '../key-value/KeyValue';
 import Loader from '../loader/Loader';
 import { SubmitButton } from '../submit-button/SubmitButton';
@@ -42,9 +43,6 @@ export default function WalletBalance() {
 
   const handleFormSubmitAction = (formData: FormData) => {
     formAction(formData);
-
-    // reset the form
-    // ref.current?.reset();
   };
 
   return (
@@ -78,15 +76,7 @@ export default function WalletBalance() {
             />
           </label>
 
-          {state.error && (
-            <p
-              aria-live="polite"
-              className="wallet-balance__error error"
-              role="status"
-            >
-              Error: {state.error}
-            </p>
-          )}
+          {state.error && <ErrorMesage error={state.error} />}
 
           <br />
 
@@ -95,8 +85,7 @@ export default function WalletBalance() {
 
         <Suspense fallback={<Loader />}>
           {!state.error &&
-            state.data &&
-            state.data.map((wallet) => {
+            state.data?.map((wallet) => {
               return (
                 <KeyValue key={wallet.available_balance} object={wallet} />
               );

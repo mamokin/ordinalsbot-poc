@@ -1,6 +1,7 @@
 'use client';
 import { useRef } from 'react';
 import { useFormState } from 'react-dom';
+import ErrorMesage from '../error-message/ErrorMessage';
 import KeyValue from '../key-value/KeyValue';
 import { SubmitButton } from '../submit-button/SubmitButton';
 import { getTickerInfoWithFormDataAction } from './actions';
@@ -37,7 +38,7 @@ export default function TickerInfo() {
   };
 
   return (
-    <article>
+    <article className="ticker-info__container">
       <h3>Ticker Info</h3>
 
       <section>
@@ -56,15 +57,7 @@ export default function TickerInfo() {
               required
             />
 
-            {state.error && (
-              <p
-                aria-live="polite"
-                className="ticker-info__error error"
-                role="status"
-              >
-                Error: {state.error}
-              </p>
-            )}
+            {state.error && <ErrorMesage error={state.error} />}
           </label>
 
           <SubmitButton key="ticker-info-submit" />

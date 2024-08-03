@@ -1,4 +1,5 @@
 'use server';
+import { DEFAULT_HEADERS } from '../../lib/constants/fetch';
 import { parseZodErrors } from '../../lib/utils/parse-zod-errors';
 import {
   parseGetWalletBalanceForm,
@@ -18,12 +19,8 @@ export async function getWalletBalance(address: string, ticker?: string) {
   }
 
   return fetch(req, {
-    method: 'GET',
-    // @ts-expect-error - 'x-api-key' custom header in use
-    headers: {
-      'Content-Type': 'application/json',
-      'x-api-key': process.env.API_KEY
-    }
+    ...DEFAULT_HEADERS,
+    method: 'GET'
   })
     .then((res) => res.json())
     .then(async (walletBalance: WalletBalance) => {

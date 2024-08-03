@@ -1,6 +1,7 @@
 import { redirect } from 'next/navigation';
 import { Suspense } from 'react';
 import { Card } from '../../components/card/Card';
+import ErrorMesage from '../../components/error-message/ErrorMessage';
 import KeyValue from '../../components/key-value/KeyValue';
 import Loader from '../../components/loader/Loader';
 import { getTickerInfo } from './actions';
@@ -25,9 +26,7 @@ export default async function Page({ params }: { params: { ticker: string } }) {
         <h3>Ticker: {params.ticker}</h3>
 
         <Suspense fallback={<Loader />}>
-          {response?.error && (
-            <p className="ticker-info__error">{response.error}</p>
-          )}
+          {response?.error && <ErrorMesage error={response.error} />}
           {!response?.error && response?.result && (
             <KeyValue object={response.result} />
           )}

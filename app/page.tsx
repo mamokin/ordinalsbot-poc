@@ -5,12 +5,12 @@ import styles from './page.module.css';
 
 export default function Home() {
   return (
-    <article>
+    <article className={styles.home__container}>
       <Card className={styles.card}>
         <TickerInfo />
       </Card>
 
-      <Card>
+      <Card className={styles.card}>
         <WalletBalance />
       </Card>
     </article>

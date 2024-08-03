@@ -9,7 +9,7 @@ export default async function Nav() {
   return (
     <Navbar>
       <Link href={NAV_PATHS.ROOT}>
-        <h3>Ordinals POC</h3>
+        <h1>Ordinals POC</h1>
       </Link>
 
       <div className="nav__content">
