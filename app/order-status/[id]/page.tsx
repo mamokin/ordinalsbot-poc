@@ -29,7 +29,7 @@ export default async function OrderStatus({
 
         <Suspense fallback={<Loader />}>
           {!response.error && response.data && (
-            <KeyValue object={response.data} />
+            <KeyValue object={response.data} excludeKeys={['id']} />
           )}
           {response.error && <ErrorMesage error={response.error} />}
         </Suspense>

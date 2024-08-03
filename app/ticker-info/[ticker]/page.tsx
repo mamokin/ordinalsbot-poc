@@ -28,7 +28,7 @@ export default async function Page({ params }: { params: { ticker: string } }) {
         <Suspense fallback={<Loader />}>
           {response?.error && <ErrorMesage error={response.error} />}
           {!response?.error && response?.result && (
-            <KeyValue object={response.result} />
+            <KeyValue object={response.result} excludeKeys={['tick']} />
           )}
         </Suspense>
       </Card>
