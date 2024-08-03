@@ -48,7 +48,7 @@ export async function getWalletBalanceWithFormDataAction(
   });
 
   if (!success) {
-    return { error: 'Error:' + parseZodErrors(error) };
+    return { error: parseZodErrors(error) };
   }
 
   try {
@@ -64,7 +64,7 @@ export async function getWalletBalanceWithFormDataAction(
       }
     }
 
-    return { error: 'Error: Missing address.' };
+    return { error: 'Missing address.' };
   } catch (e) {
     return { error: 'Something went wrong...' };
   }

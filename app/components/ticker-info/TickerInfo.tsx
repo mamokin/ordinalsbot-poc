@@ -13,7 +13,7 @@ export type TickerInfoFormState = Partial<{
   data: TTickerInfo['result'] | null;
 }>;
 
-const initialState = {
+const initialState: TickerInfoFormState = {
   message: '',
   error: '',
   data: null
@@ -56,13 +56,15 @@ export default function TickerInfo() {
               required
             />
 
-            <p
-              aria-live="polite"
-              className="ticker-info__error error"
-              role="status"
-            >
-              {state?.error}
-            </p>
+            {state.error && (
+              <p
+                aria-live="polite"
+                className="ticker-info__error error"
+                role="status"
+              >
+                Error: {state.error}
+              </p>
+            )}
           </label>
 
           <SubmitButton key="ticker-info-submit" />
