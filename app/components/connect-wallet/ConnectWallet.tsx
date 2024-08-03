@@ -175,7 +175,7 @@ export function ConnectWallet() {
 
       if (uri) {
         QRCodeModal.open(uri, () => {
-          console.log('QR Code Modal closed');
+          console.info('QR Code Modal closed');
         });
       }
 

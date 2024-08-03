@@ -1,4 +1,5 @@
 'use server';
+import { parseZodErrors } from '../../lib/utils/parse-zod-errors';
 import { OrderStatus, orderStatusSchema } from './schema';
 
 /**
@@ -15,19 +16,19 @@ export async function getOrderStatus(id: string) {
   })
     .then((res) => res.json())
     .then(async (orderStatus: OrderStatus) => {
-      console.log('orderStatus', orderStatus);
       if (orderStatus.status === 'error' && !!orderStatus.error) {
-        console.error('FAILED to GET ORDER STATUS: ', orderStatus.error);
-        return { error: orderStatus.error };
+        return { error: orderStatus.error, data: undefined };
       }
       const { success, data, error } =
         await orderStatusSchema.safeParseAsync(orderStatus);
 
       if (!success) {
-        console.error('FAILED to parse ORDER STATUS: ', error);
-        return null;
+        return {
+          error: `Schema parsing error: ${parseZodErrors(error)}`,
+          data: undefined
+        };
       }
 
-      return { data };
+      return { error: '', data };
     });
 }

@@ -4,7 +4,7 @@ import { Card } from '../../components/card/Card';
 import KeyValue from '../../components/key-value/KeyValue';
 import Loader from '../../components/loader/Loader';
 import { getOrderStatus } from './actions';
-import { OrderStatus as TOrderStatus } from './schema';
+import './page.css';
 
 export default async function OrderStatus({
   params
@@ -21,24 +21,24 @@ export default async function OrderStatus({
     return null;
   }
 
-  // KeyValue component does not handle nested objects, clone the response and remove tx
-  const properties = { ...response } as Partial<TOrderStatus>;
-  if (!!properties.tx) {
-    delete properties.tx;
-  }
-
-  const tx = response.data?.tx;
-
   return (
     <article className="order-status__container">
       <Card>
         <h3>Order ID: {params.id}</h3>
 
         <Suspense fallback={<Loader />}>
-          {properties && (
-            <KeyValue object={properties as Omit<TOrderStatus, 'tx'>} />
+          {!response.error && response.data && (
+            <KeyValue object={response.data} />
           )}
-          {tx && <KeyValue object={tx} />}
+          {response.error && (
+            <p
+              aria-live="polite"
+              className="order-info__error error"
+              role="status"
+            >
+              Error: {response.error}
+            </p>
+          )}
         </Suspense>
       </Card>
     </article>
