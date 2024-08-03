@@ -8,6 +8,7 @@ import { getTickerInfo } from './actions';
 
 async function getData(ticker: string) {
   const response = await getTickerInfo(ticker);
+  // fake delay to demonstrate SSR Suspenseful component in action
   await new Promise((resolve) => setTimeout(resolve, 7000));
 
   return response;

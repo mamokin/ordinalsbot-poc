@@ -45,17 +45,17 @@ export default function KeyValue({
     }
   };
 
-  const renderKV = (k: string, v: string | boolean | number | null) => {
-    const prettyKey = snakeCaseToSentence(k);
+  const renderKV = (key: string, value: string | boolean | number | null) => {
+    const prettyKey = snakeCaseToSentence(key);
 
-    if (!excludeKeys.includes(k)) {
+    if (!excludeKeys.includes(key)) {
       return (
-        <p key={k} className="key-value__statistic">
+        <p key={key} className="key-value__statistic">
           <span className="key-value__statistic-key bold capitalize">
             {camelCaseToSentence(prettyKey).replace(idRegex, 'ID')}
           </span>
           &nbsp;
-          {renderValueByTypeOrKey(k, v)}
+          {renderValueByTypeOrKey(key, value)}
         </p>
       );
     }
@@ -65,10 +65,9 @@ export default function KeyValue({
 
   return (
     <>
-      {Object.entries(object).map(([k, v]) => {
-        console.log('k', k);
-        if (v && typeof v !== 'object') {
-          return renderKV(k, v);
+      {Object.entries(object).map(([key, value]) => {
+        if (value && typeof value !== 'object') {
+          return renderKV(key, value);
         }
 
         return null;

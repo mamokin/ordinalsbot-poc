@@ -22,8 +22,6 @@ const initialState: WalletBalanceFormState = {
 };
 
 /**
- * server component
- *
  * This component fetches the following for BRC20 token:
  *
  *  - available balance

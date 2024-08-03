@@ -1,22 +1,17 @@
-'use client';
-import { useState } from 'react';
 import { CHAIN_IDS } from '../../lib/constants/chain-ids';
 import './ChainsList.css';
 
 export default function ChainsList({
-  callback
+  onClick
 }: {
-  callback: (chain: string) => void;
+  onClick: (chain: string) => void;
 }) {
-  const [selectedChain, setSelectedChain] = useState<string | undefined>();
-
   const onSelectChain = (
     event: React.MouseEvent<HTMLElement>,
     chain: string
   ) => {
     event.preventDefault();
-    setSelectedChain(chain);
-    callback(chain);
+    onClick(chain);
   };
 
   return (

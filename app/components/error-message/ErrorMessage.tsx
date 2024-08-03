@@ -1,4 +1,3 @@
-'use client';
 import './ErrorMessage.css';
 
 export default function ErrorMesage({ error }: { error: string }) {

@@ -10,10 +10,8 @@ import Loader from '../loader/Loader';
 import './ConnectWallet.css';
 
 export function ConnectWallet() {
-  const [client, setClient] = useState<Client | undefined>(undefined);
-  const [session, setSession] = useState<SessionTypes.Struct | undefined>(
-    undefined
-  );
+  const [client, setClient] = useState<Client | undefined>();
+  const [session, setSession] = useState<SessionTypes.Struct | undefined>();
   const [showChains, setShowChains] = useState<boolean>(false);
 
   client?.on('session_proposal', (event) => {
@@ -240,7 +238,7 @@ export function ConnectWallet() {
   }
 
   if (showChains) {
-    return <ChainsList callback={handleConnect} />;
+    return <ChainsList onClick={handleConnect} />;
   }
 
   return (

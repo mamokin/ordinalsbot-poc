@@ -6,7 +6,6 @@ import KeyValue from '../key-value/KeyValue';
 import { SubmitButton } from '../submit-button/SubmitButton';
 import { getTickerInfoWithFormDataAction } from './actions';
 import { TickerInfo as TTickerInfo } from './schema';
-import './TickerInfo.css';
 
 export type TickerInfoFormState = Partial<{
   message: string;
