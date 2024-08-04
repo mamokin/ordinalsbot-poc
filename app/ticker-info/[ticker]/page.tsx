@@ -4,12 +4,12 @@ import { Card } from '../../components/card/Card';
 import ErrorMesage from '../../components/error-message/ErrorMessage';
 import KeyValue from '../../components/key-value/KeyValue';
 import Loader from '../../components/loader/Loader';
+import fakeDelay from '../../lib/utils/fake-delay';
 import { getTickerInfo } from './actions';
 
 async function getData(ticker: string) {
   const response = await getTickerInfo(ticker);
-  // fake delay to demonstrate SSR Suspenseful component in action
-  await new Promise((resolve) => setTimeout(resolve, 7000));
+  await fakeDelay();
 
   return response;
 }

@@ -2,11 +2,10 @@
 import QRCodeModal from '@walletconnect/qrcode-modal';
 import Client from '@walletconnect/sign-client';
 import { ProposalTypes, SessionTypes } from '@walletconnect/types';
-import { Suspense, useEffect, useState } from 'react';
-import { META_MASK_ETH_CHAIN_ID } from '../../lib/constants/chain-ids';
+import { useEffect, useState } from 'react';
+import { ETH_MAINNET_CHAIN_ID } from '../../lib/constants/chain-ids';
 import { getSessionMetrics } from '../../lib/utils/wallet-connect';
 import ChainsList from '../chains-list/ChainsList';
-import Loader from '../loader/Loader';
 import './ConnectWallet.css';
 
 export function ConnectWallet() {
@@ -145,7 +144,7 @@ export function ConnectWallet() {
           events: []
         }
       };
-    } else if (_chain === META_MASK_ETH_CHAIN_ID) {
+    } else if (_chain === ETH_MAINNET_CHAIN_ID) {
       // set namespaces config for ethereum
       requiredNamespaces = {
         eip155: {
@@ -202,9 +201,9 @@ export function ConnectWallet() {
   };
 
   if (session) {
-    const { accountAddress, chainId, provider } = getSessionMetrics(session);
+    const { accountAddress, provider } = getSessionMetrics(session);
 
-    const onResetSession = (event: React.MouseEvent<HTMLElement>) => {
+    const onDisconnectWallet = (event: React.MouseEvent<HTMLElement>) => {
       event.preventDefault();
       client?.disconnect({
         topic: session.topic,
@@ -217,22 +216,19 @@ export function ConnectWallet() {
 
     return (
       <article className="connect-wallet__stats-container">
-        <Suspense fallback={<Loader />}>
-          <button
-            type="button"
-            className="connect-wallet__button"
-            onClick={onResetSession}
-          >
-            Clear Session
-          </button>
-          <div className="connect-wallet__stats">
-            <p id="provider">Wallet provider: {provider}</p>
-            <p id="chain">Chain: {chainId}</p>
-            <p id="address" className="connect-wallet__stats-address">
-              Address: {accountAddress}
-            </p>
-          </div>
-        </Suspense>
+        <button
+          type="button"
+          className="connect-wallet__button"
+          onClick={onDisconnectWallet}
+        >
+          Disconnect Wallet
+        </button>
+        <div className="connect-wallet__stats">
+          <p id="provider">Wallet provider: {provider}</p>
+          <p id="address" className="connect-wallet__stats-address">
+            Address: {accountAddress}
+          </p>
+        </div>
       </article>
     );
   }

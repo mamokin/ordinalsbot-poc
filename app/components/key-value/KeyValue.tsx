@@ -1,4 +1,3 @@
-'use client';
 import { camelCaseToSentence } from '../../lib/utils/camel-case-to-sentence';
 import { snakeCaseToSentence } from '../../lib/utils/snake-case-to-sentence';
 import './KeyValue.css';
@@ -8,13 +7,15 @@ import './KeyValue.css';
  * Note: nested objects are ignored
  */
 export default function KeyValue({
-  object,
+  object = {},
   excludeKeys = []
 }: {
-  object: Record<string, object | string | boolean | number | null>;
+  object?: Record<string, object | string | boolean | number | null>;
   excludeKeys?: string[];
 }) {
   const idRegex = /\bid\b/gi; // match words case insensitive 'id'
+  const urlRegex =
+    /(?:http[s]?:\/\/.)?(?:www\.)?[-a-zA-Z0-9@%._\+~#=]{2,256}\.[a-z]{2,6}\b(?:[-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)/gm;
 
   const renderValueByTypeOrKey = (
     key: string,
@@ -35,10 +36,20 @@ export default function KeyValue({
       default:
         const isID = idRegex.test(key) || key.includes('_id');
         const isAddress = key.includes('_address');
+        const isURL = urlRegex.test(value as string);
 
         // underline IDs and addresses
         if (formattedValue && (isID || isAddress)) {
           return <span className="underline">{formattedValue}</span>;
+        }
+
+        // anchor tags for URL keys
+        if (value && isURL) {
+          return (
+            <a href={value as string} target="_blank">
+              {value}
+            </a>
+          );
         }
 
         return formattedValue;

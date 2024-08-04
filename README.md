@@ -125,6 +125,8 @@ As this proof-of-concept (POC) repository is an API interaction one, a `.env.loc
 API_KEY= api_key
 # go to https://cloud.walletconnect.com to get a new project
 NEXT_PUBLIC_PROJECT_ID= cloud.walletconnect.com
+# go to https://accounts.blockcypher.com/tokens to get a new token
+BLOCK_CYPHER_API_TOKEN= token
 ```
 
 Additionally, the "Dotenv Official +Vault" vscode extension has been added to the projects Workspace Recommendations.
