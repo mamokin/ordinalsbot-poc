@@ -184,7 +184,7 @@ NextJS 14 ships with a variety of useful tools and functionality that pair nicel
 
 There are some design principles being followed throughout this projects code. A notable one that is difficult to enforce with utilities such as ESLint and Prettier is CSS naming semantics.
 
-This project adheres to [BEM](https://getbem.com/introduction/) naming conventions for element class names. While Tailwind CSS has been opted into as part of the bootstrap `creat-next-app` script, all new components are designed with new CSS to reduce any external factors breaking the component library appearances. While uncommon, large design libraries publish updates with breaking changes which can create large and mandatory development efforts to be performed to unblock work once started.
+This project adheres to [BEM](https://getbem.com/introduction/) naming conventions for element class names. While Tailwind CSS has been opted into as part of the bootstrap `create-next-app` script, all new components are designed with new CSS to reduce any external factors breaking the component library appearances. While uncommon, large design libraries publish updates with breaking changes which can create large and mandatory development efforts to be performed to unblock work once started.
 
 > NOTE: use custom classes cautiously when mixing with tailwind
 >
