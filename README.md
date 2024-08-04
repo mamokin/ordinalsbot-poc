@@ -27,11 +27,13 @@
 
 ## Overview
 
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app). All the default options were selected which result in following: App Router, Tailwind CSS, & TypeScript.
+This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app). All the default options were selected, which resulted in the following: App Router, Tailwind CSS, and TypeScript.
 
-When navigating to the `/order-status` and `/ticker-info` dynamic routes, ensure you provide a query parameter in the URL. The error page will remind you of such if you end up seeing it.
+When navigating to the `/order-status` and `/ticker-info` dynamic routes, ensure you provide a query parameter in the URL. The error page will remind you if you end up seeing it.
+The `/ticker-info` dynamic route, "Wallet Balance" card, and "Latest BTC Block Info" card have a fake delay injected to ensure loader states can be viewed.
+The `/ticker-info` route loader is a Suspenseful Component interaction, while the cards use client components, and the `useFormState` hook alongside zod with asynchronous form server actions. 
 
-This application has a "connect wallet" function that has been built with MetaMask in mind due to its prevelance. Under the hood, this is powered via [WalletConnect](https://walletconnect.com/). The configuration of WalletConnect leverages QR codes for connecting wallets and instantiates a web socket connection to handle various events. At present, you can connect a wallet, restore a prior session, and disconnect a wallet. The following details the process of disconnecting a MetaMask wallet from the mobile Android application:
+Due to its prevalence, this application has a "connect wallet" function built with MetaMask in mind. Under the hood, this is powered via [WalletConnect](https://walletconnect.com/). The configuration of WalletConnect leverages QR codes for connecting wallets and instantiates a web socket connection to handle various events. You can now connect a wallet, restore a prior session, and disconnect a wallet. The following details the process of disconnecting a MetaMask wallet from the mobile Android application:
 
 1.  Navigate to settings via the cogwheel at the bottom right of the screen
 2.  Scroll down and open the "Experimental" rule set
@@ -75,7 +77,7 @@ Husky has been added to perform some checks on code:
 - TypeScript compilation
 - build script
 
-Husky has some required modification to scripts within package.json:
+Husky has some required modifications to scripts within package.json:
 
 - check-types
   - TypeScript check
