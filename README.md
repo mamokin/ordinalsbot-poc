@@ -29,7 +29,7 @@
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app). All the default options were selected which result in following: App Router, Tailwind CSS, & TypeScript.
 
-When navigating to the `/order-status` and `ticker-info` dynamic routes, ensure you provide a query parameter in the URL. The error page will remind you of such if you end up seeing it.
+When navigating to the `/order-status` and `/ticker-info` dynamic routes, ensure you provide a query parameter in the URL. The error page will remind you of such if you end up seeing it.
 
 This application has a "connect wallet" function that has been built with MetaMask in mind due to its prevelance. Under the hood, this is powered via [WalletConnect](https://walletconnect.com/). The configuration of WalletConnect leverages QR codes for connecting wallets and instantiates a web socket connection to handle various events. At present, you can connect a wallet, restore a prior session, and disconnect a wallet. The following details the process of disconnecting a MetaMask wallet from the mobile Android application:
 
