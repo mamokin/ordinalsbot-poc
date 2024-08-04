@@ -1,4 +1,4 @@
-# ordinals poc
+# ordinalsbot poc
 
 ## Table of contents
 
