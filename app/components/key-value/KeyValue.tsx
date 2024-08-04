@@ -16,6 +16,8 @@ export default function KeyValue({
   const idRegex = /\bid\b/gi; // match words case insensitive 'id'
   const urlRegex =
     /(?:http[s]?:\/\/.)?(?:www\.)?[-a-zA-Z0-9@%._\+~#=]{2,256}\.[a-z]{2,6}\b(?:[-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)/gm;
+  const datetimeRegex =
+    /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})$/gim;
 
   const renderValueByTypeOrKey = (
     key: string,
@@ -37,6 +39,7 @@ export default function KeyValue({
         const isID = idRegex.test(key) || key.includes('_id');
         const isAddress = key.includes('_address');
         const isURL = urlRegex.test(value as string);
+        const isDateTime = datetimeRegex.test(value as string);
 
         // underline IDs and addresses
         if (formattedValue && (isID || isAddress)) {
@@ -50,6 +53,11 @@ export default function KeyValue({
               {value}
             </a>
           );
+        }
+
+        // parse date time strings into something human friendly
+        if (isDateTime) {
+          return new Date(value as string).toString();
         }
 
         return formattedValue;
