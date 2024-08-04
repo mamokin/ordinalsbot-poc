@@ -63,8 +63,6 @@ export default function LatestBitcoinBlock() {
       <div className="latest-bitcoin-block__header">
         <h3>
           Latest BTC Block Info&nbsp;
-          <br />
-          <sup>Auto-refreshes every two minutes</sup>
         </h3>
 
         <div className="latest-bitcoin-block__indicator">
