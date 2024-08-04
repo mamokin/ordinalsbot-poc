@@ -6,7 +6,7 @@ export function SubmitButton() {
 
   return (
     <button type="submit" aria-disabled={pending} disabled={pending}>
-      Submit
+      {pending ? 'Loading...' : 'Submit'}
     </button>
   );
 }

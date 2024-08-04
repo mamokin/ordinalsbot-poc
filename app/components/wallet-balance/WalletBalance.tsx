@@ -1,9 +1,8 @@
 'use client';
-import { Suspense, useRef } from 'react';
+import { useRef } from 'react';
 import { useFormState } from 'react-dom';
 import ErrorMesage from '../error-message/ErrorMessage';
 import KeyValue from '../key-value/KeyValue';
-import Loader from '../loader/Loader';
 import { SubmitButton } from '../submit-button/SubmitButton';
 import { getWalletBalanceWithFormDataAction } from './actions';
 import { WalletBalance as TWalletBalance } from './schema';
@@ -81,14 +80,10 @@ export default function WalletBalance() {
           <SubmitButton key="wallet-balance-submit" />
         </form>
 
-        <Suspense fallback={<Loader />}>
-          {!state.error &&
-            state.data?.map((wallet) => {
-              return (
-                <KeyValue key={wallet.available_balance} object={wallet} />
-              );
-            })}
-        </Suspense>
+        {!state.error &&
+          state.data?.map((wallet) => {
+            return <KeyValue key={wallet.available_balance} object={wallet} />;
+          })}
       </section>
     </article>
   );

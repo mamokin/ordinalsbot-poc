@@ -17,7 +17,6 @@ export async function getTickerInfo(ticker: string) {
   )
     .then((res) => res.json())
     .then(async (tickerInfo: TickerInfo) => {
-      console.log('tickerInfo', tickerInfo);
       const { success, data, error } =
         await tickerInfoSchema.safeParseAsync(tickerInfo);
 

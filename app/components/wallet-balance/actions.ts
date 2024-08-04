@@ -1,5 +1,6 @@
 'use server';
 import { DEFAULT_HEADERS } from '../../lib/constants/fetch';
+import fakeDelay from '../../lib/utils/fake-delay';
 import { parseZodErrors } from '../../lib/utils/parse-zod-errors';
 import {
   parseGetWalletBalanceForm,
@@ -17,6 +18,8 @@ export async function getWalletBalance(address: string, ticker?: string) {
   if (ticker) {
     req += `ticker=${ticker}`;
   }
+
+  await fakeDelay();
 
   return fetch(req, {
     ...DEFAULT_HEADERS,

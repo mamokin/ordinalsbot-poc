@@ -9,9 +9,7 @@ import { DEFAULT_METADATA } from './lib/constants/metadata';
 
 const inter = Inter({ subsets: ['latin'] });
 
-export const metadata: Metadata = {
-  ...DEFAULT_METADATA
-};
+export const metadata: Metadata = DEFAULT_METADATA;
 
 export default function RootLayout({
   children

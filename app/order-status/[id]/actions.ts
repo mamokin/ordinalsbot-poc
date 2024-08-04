@@ -16,6 +16,7 @@ export async function getOrderStatus(id: string) {
       if (orderStatus.status === 'error' && !!orderStatus.error) {
         return { error: orderStatus.error, data: undefined };
       }
+
       const { success, data, error } =
         await orderStatusSchema.safeParseAsync(orderStatus);
 
