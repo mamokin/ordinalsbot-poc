@@ -47,7 +47,7 @@ export default function KeyValue({
         }
 
         // anchor tags for URL keys
-        if (value && isURL) {
+        if (value && isURL && !key.includes('name')) {
           return (
             <a href={value as string} target="_blank">
               {value}
