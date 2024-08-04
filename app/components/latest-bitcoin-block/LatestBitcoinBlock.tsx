@@ -61,9 +61,7 @@ export default function LatestBitcoinBlock() {
   return (
     <article className="latest-bitcoin-block__container">
       <div className="latest-bitcoin-block__header">
-        <h3>
-          Latest BTC Block Info&nbsp;
-        </h3>
+        <h3>Latest BTC Block Info&nbsp;</h3>
 
         <div className="latest-bitcoin-block__indicator">
           {loading ? (
