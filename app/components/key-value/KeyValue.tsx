@@ -37,7 +37,7 @@ export default function KeyValue({
         return <span className="info">{value}</span>;
       default:
         const isID = idRegex.test(key) || key.includes('_id');
-        const isAddress = key.includes('_address');
+        const isAddress = key.toLowerCase().includes('address');
         const isURL = urlRegex.test(value as string);
         const isDateTime = datetimeRegex.test(value as string);
 
