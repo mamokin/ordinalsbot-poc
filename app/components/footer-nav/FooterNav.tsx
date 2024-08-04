@@ -6,7 +6,7 @@ const FooterNav = (): React.JSX.Element => {
     <div className="footer-nav__container">
       <ul className="footer-nav__list">
         <li>
-          <a href="https://github.com/mamokin/ordinals-poc" target="__blank">
+          <a href="https://github.com/mamokin/ordinalsbot-poc" target="__blank">
             GitHub
           </a>
         </li>
