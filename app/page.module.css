@@ -106,6 +106,6 @@
   .home__container {
     flex-direction: row;
     align-items: flex-start;
-    max-width: 1600px;
+    max-width: 2460px;
   }
 }
