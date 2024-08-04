@@ -2,7 +2,6 @@
 import { useEffect, useState } from 'react';
 import { ClipLoader } from 'react-spinners';
 import { getLatestBTCBlock } from '../../lib/utils/btc-chain';
-import fakeDelay from '../../lib/utils/fake-delay';
 import Countdown from '../countdown/Countdown';
 import KeyValue from '../key-value/KeyValue';
 import Loader from '../loader/Loader';
@@ -19,7 +18,22 @@ export default function LatestBitcoinBlock() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        await fakeDelay();
+        const data = await getLatestBTCBlock();
+        // initial run of data fetch
+        setData(data);
+
+        // disable loader
+        setInitialLoading(false);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
         return await getLatestBTCBlock();
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -36,7 +50,6 @@ export default function LatestBitcoinBlock() {
 
         // disable loaders
         setLoading(false);
-        setInitialLoading(false);
       } else {
         console.warn('already loading data...');
       }
@@ -64,7 +77,13 @@ export default function LatestBitcoinBlock() {
           )}
         </div>
       </div>
-      {initialLoading ? <Loader color="black" /> : <KeyValue object={data} />}
+      {initialLoading ? (
+        <Loader color="black" />
+      ) : (
+        <section className="latest-bitcoin-block__metrics">
+          <KeyValue object={data} />
+        </section>
+      )}
     </article>
   );
 }
