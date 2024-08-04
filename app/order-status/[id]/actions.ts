@@ -1,5 +1,4 @@
 'use server';
-import { DEFAULT_HEADERS } from '../../lib/constants/fetch';
 import { parseZodErrors } from '../../lib/utils/parse-zod-errors';
 import { OrderStatus, orderStatusSchema } from './schema';
 
@@ -8,7 +7,6 @@ import { OrderStatus, orderStatusSchema } from './schema';
  */
 export async function getOrderStatus(id: string) {
   return fetch(`https://api.ordinalsbot.com/order?id=${id}`, {
-    ...DEFAULT_HEADERS,
     method: 'GET'
   })
     .then((res) => res.json())
