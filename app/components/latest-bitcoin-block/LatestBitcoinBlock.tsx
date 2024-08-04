@@ -8,7 +8,7 @@ import Loader from '../loader/Loader';
 import './LatestBitcoinBlock.css';
 
 export default function LatestBitcoinBlock() {
-  const DELAY = 120000; // 2 mins
+  const DELAY = 600000; // 10 mins
   const [data, setData] = useState<
     Record<string, string | number | boolean | object | null> | undefined
   >();
