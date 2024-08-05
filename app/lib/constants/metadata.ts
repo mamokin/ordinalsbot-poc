@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
 
-export const APP_NAME = 'Ordinals POC';
+export const APP_NAME = 'Ordinalsbot POC';
 
 export const DEFAULT_METADATA: Metadata = {
   title: {
