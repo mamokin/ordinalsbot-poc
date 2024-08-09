@@ -22,8 +22,11 @@ const initialState: TickerInfoFormState = {
 export default function TickerInfo() {
   const ref = useRef<HTMLFormElement>(null);
 
-  // TODO: https://github.com/vercel/next.js/issues/65673#issuecomment-2112746191
-  // const [state, formAction] = useActionState(createSubmissionAction, initialState)
+  //TODO: github.com/vercel/next.js/issues/65673#issuecomment-2112746191
+  // const [state, formAction] = useActionState(
+  //   getTickerInfoWithFormDataAction,
+  //   initialState
+  // );
   const [state, formAction] = useFormState(
     getTickerInfoWithFormDataAction,
     initialState

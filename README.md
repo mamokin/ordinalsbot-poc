@@ -31,7 +31,7 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 When navigating to the `/order-status` and `/ticker-info` dynamic routes, ensure you provide a query parameter in the URL. The error page will remind you if you end up seeing it.
 The `/ticker-info` dynamic route, "Wallet Balance" card, and "Latest BTC Block Info" card have a fake delay injected to ensure loader states can be viewed.
-The `/ticker-info` route loader is a Suspenseful Component interaction, while the cards use client components, and the `useFormState` hook alongside zod with asynchronous form server actions. 
+The `/ticker-info` route loader is a Suspenseful Component interaction, while the cards use client components, and the `useFormState` hook alongside zod with asynchronous form server actions.
 
 Due to its prevalence, this application has a "connect wallet" function built with MetaMask in mind. Under the hood, this is powered via [WalletConnect](https://walletconnect.com/). The configuration of WalletConnect leverages QR codes for connecting wallets and instantiates a web socket connection to handle various events. You can now connect a wallet, restore a prior session, and disconnect a wallet. The following details the process of disconnecting a MetaMask wallet from the mobile Android application:
 
