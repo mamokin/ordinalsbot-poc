@@ -159,7 +159,7 @@ export function ConnectWallet() {
           events: ['chainChanged', 'accountsChanged']
         }
       };
-    } else if (_chain.includes('BTC')) {
+    } else if (_chain.includes('bip122')) {
       // set namespace config for bitcoin
       requiredNamespaces = {
         bip122: {
